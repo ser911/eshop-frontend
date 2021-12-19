@@ -19,7 +19,7 @@ export class CategoriesListComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
     this._getCategories();
   }
 
