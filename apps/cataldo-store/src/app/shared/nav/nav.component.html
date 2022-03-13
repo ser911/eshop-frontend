@@ -1,0 +1,61 @@
+<!-- <ul class="nav">
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/products">Products</a></li>
+    <li><a routerLink="/contact">Contact</a></li>
+</ul> -->
+<div class="dropdown">
+  <button class="dropbtn">UOMO</button>
+    <div class="dropdown-content">
+      <div class="brands">
+        <h4>Brands</h4>
+        <!-- <a href="">Barbour</a>
+        <a href="">Blauer</a> -
+        <a href="">Colmar</a> -
+        <a href="">EA7</a> -
+        <a href="">Fred Perry</a>
+        <a href="">Kway</a> - 
+        <a href="">Lacoste</a> -
+        <a href="">Murphy & Nye</a>
+        <a href="">Old River</a>
+        <a href="">Peninsula</a>
+        <a href="">Saucony</a> - 
+        <a href="">Sun68</a> -->
+        <a *ngFor="let brand of brands">{{brand.name}}</a>
+
+      </div>
+      <div class="categories">
+        <h4>Categorie</h4>
+        <a *ngFor="let category of categories">{{category.name}}</a>
+      </div>
+    </div> 
+</div>
+
+ <div class="dropdown-2">
+  <button class="dropbtn">DONNA</button>
+    <div class="dropdown-content-2">
+      <div class="brands">
+        <h4>Brands</h4>
+        <!-- <a href="">6</a>
+        <a href="">7</a>
+        <a href="">8</a>
+        <a href="">9</a> -->
+        <a *ngFor="let brand of brands">{{brand.name}}</a>
+      </div>
+      <div class="categories">
+        <h4>Categorie</h4>
+        <a *ngFor="let category of categories">{{category.name}}</a>
+      </div>
+    </div>
+
+</div>
+<div class="dropdown-3">
+  <button class="dropbtn">PROMOZIONI</button>
+    <div class="dropdown-content-3">
+      <h4>Saldi</h4>
+      <a href="">Saldi Uomo</a>
+      <a href="">Saldi Donna</a>
+    </div>
+
+
+</div>
+ 

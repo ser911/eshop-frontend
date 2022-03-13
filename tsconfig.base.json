@@ -16,12 +16,12 @@
     "baseUrl": ".",
     "strictPropertyInitialization": false,
     "paths": {
+      "@env/*": ["environments/*"],
+      "@eshop-frontend/categoriesService": ["libs/products/src/index.ts"],
       "@eshop-frontend/orders": ["libs/orders/src/index.ts"],
       "@eshop-frontend/products": ["libs/products/src/index.ts"],
       "@eshop-frontend/ui": ["libs/ui/src/index.ts"],
-      "@eshop-frontend/users": ["libs/users/src/index.ts"],
-      "@eshop-frontend/categoriesService": ["libs/products/src/index.ts"],
-      "@env/*": ["environments/*"]
+      "@eshop-frontend/users": ["libs/users/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

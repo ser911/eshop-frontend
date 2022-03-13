@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <p-card [header]="editmode ? 'Edit Product' : 'Add Product'">
   <div class="grid mb-5">
     <div class="col-12">
@@ -5,9 +6,9 @@
         <div class="p-toolbar-group-left"></div>
         <div class="p-toolbar-group-right">
           <p-button styleClass="p-button-success mr-3" [label]="editmode ? 'Update' : 'Create'"
-            [icon]="editmode ? 'pi pi-pencil' : 'pi pi-plus'" (click)=onSubmit()>
+            [icon]="editmode ? 'pi pi-pencil' : 'pi pi-plus'" (click)= onSubmit()>
           </p-button>
-          <p-button styleClass="p-button-secondary" label="Back" icon="pi pi-arrow-circle-left">
+          <p-button styleClass="p-button-secondary" label="Back" icon="pi pi-arrow-circle-left" (click)="back()">
           </p-button>
         </div>
       </p-toolbar>
@@ -26,12 +27,21 @@
 
           <div class="field col">
             <label for="Brand">Brand</label>
-            <input formControlName="brand" id="Brand" type="text" pInputText />
+            <!-- <input formControlName="brand" id="Brand" type="text" pInputText /> -->
+            <p-dropdown [options]="brands"
+            formControlName="brand"
+             optionLabel="name"
+             optionValue="id"
+             [filter]="true"
+             filterBy="name"
+            [showClear]="true"
+            placeholder="Select a brand">
+</p-dropdown>
             <small *ngIf="productForm.brand.invalid && isSubmitted" class="p-error">Brand is required</small>
           </div>
           <div class="field col">
             <label for="Price">Price</label>
-            <p-inputNumber formControlName="price" mode="decimal" inputId="price" type="number"></p-inputNumber>
+            <p-inputNumber formControlName="price" mode="currency" currency="EUR" inputId="price" type="number"></p-inputNumber>
             <small *ngIf="productForm.price.invalid && isSubmitted" class="p-error">Price is required</small>
           </div>
         </div>
@@ -70,23 +80,17 @@
           <div class="field col-12">
             <label for="name">Main Image</label>
             <input type="file" class="p-inputtext" accept="image/*" (change)="onImageUpload($event)">
+            <small *ngIf="productForm.image.invalid && isSubmitted" class="p-error">Image is required</small>
             
             <div class="col-2 mt-2 pl-0">
               <img [src]="imageDisplay" alt="" style="width: 100%;">
             </div>
           </div>
           <div class="field col-12">
-            <label for="name">Gallery</label>
-            <input type="file" class="p-inputtext" accept="images/*" (change)="onGalleryUpload($event)" multiple>
 
-            <div class=" col-12 mt-2 pl-0">
-              <img *ngFor="let file of galleryFiles" [src]="file" alt="image not available" style="width: 15%;">
-              
-            </div>
+            <admin-frontend-gallery-upload></admin-frontend-gallery-upload>
+
           </div>
-
-
-
         </div>
       </form>
     </div>

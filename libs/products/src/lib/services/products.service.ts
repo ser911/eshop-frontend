@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Category } from '../models/category';
+import { map } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Product } from '../models/product';
 
@@ -13,26 +13,53 @@ export class ProductsService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrlProducts);
+  getProducts(categoriesFilter?: string[]): Observable<Product[]> {
+    let params = new HttpParams();
+    if (categoriesFilter) {
+      params = params.append('categories', categoriesFilter.join(','));
+      console.log(params);
+      
+    }
+    return this.http.get<Product[]>(this.apiUrlProducts, { params: params });
   }
-/*   getCategory(categoryId: string): Observable<Category> {
-    return this.http.get<Category>(`${this.apiUrlCategories}/${categoryId}`);
-  }
-  */
 
+  getProductsByBrand(brandId: string): Observable<Product[]>{
+    return this.http.get<Product[]>(`${this.apiUrlProducts}/brand/${brandId}`)
+  }
+
+  getProduct(productId: string): Observable<Product> {
+   return this.http.get<Product>(`${this.apiUrlProducts}/${productId}`);
+ }
+ 
   createProduct(productData: FormData): Observable<Product> {
     return this.http.post<Product>(this.apiUrlProducts, productData);
   }
-
-/*   updateCategory(category: Category): Observable<Category> {
-    return this.http.put<Category>(
-      `${this.apiUrlCategories}/${category.id}`,
-      category
-    );
+  
+  updateProduct(productData: FormData, productid: string): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrlProducts}/${productid}`, productData);
   }
 
-  deleteCategory(categoryId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrlCategories}/${categoryId}`);
-  }  */
+  updateProductWithVariant(productData: FormData, productid: string): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrlProducts}/${productid}/add/variant`, productData);
+  }
+
+
+deleteProduct(productId: string): Observable<any> {
+  return this.http.delete<any>(`${this.apiUrlProducts}/${productId}`);
+}
+
+getProductsCount(): Observable<number> {
+  return this.http
+    .get<number>(`${this.apiUrlProducts}/get/count`)
+    .pipe(map((objectValue: any) => objectValue.productCount));
+}
+
+getFeaturedProducts(): Observable<Product[]>{
+  return this.http.get<Product[]>(`${this.apiUrlProducts}/get/featured/`);
+}
+
+addGallery(productId: string, galleryFormData: FormData): Observable<Product>{
+  return this.http.put<Product>(`${this.apiUrlProducts}/gallery-images/${productId}`, galleryFormData)
+}
+
 }

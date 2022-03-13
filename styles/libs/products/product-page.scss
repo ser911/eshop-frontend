@@ -1,0 +1,32 @@
+.product{
+
+ 
+    &-name{
+        font-size: 2em;
+    }
+    &-desc{
+        font-size: 1.4em;
+    }
+    &-rating{
+        margin: 15px 0;
+    }
+
+    &-price{
+        font-size: 1.2em;
+        font-weight: 800;
+        border-bottom: 1px solid var(--surface-300);
+        padding: 25px 0;
+    }
+
+    &-quantity{
+        margin: 25px 0;
+    }
+
+    .p-button{
+        background-color: #810000;
+        border-color: #810000;
+
+      }
+
+    
+}

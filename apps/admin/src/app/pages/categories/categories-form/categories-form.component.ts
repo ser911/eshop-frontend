@@ -1,10 +1,10 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriesService, Category } from '@eshop-frontend/products';
 import { MessageService } from 'primeng/api';
-import { timer } from 'rxjs';
+import { Subject,timer } from 'rxjs';
 
 
 
@@ -13,11 +13,13 @@ import { timer } from 'rxjs';
   templateUrl: './categories-form.component.html',
   styles: [],
 })
-export class CategoriesFormComponent implements OnInit {
+export class CategoriesFormComponent implements OnInit, OnDestroy {
   form: FormGroup;
-  isSubmitted: boolean = false;
-  editmode: boolean = false;
+  isSubmitted = false;
+  editmode = false;
   currentCategoryId: string;
+  endsubs$: Subject<any> = new Subject();
+
 
   constructor(
     private messageService: MessageService,
@@ -35,6 +37,14 @@ export class CategoriesFormComponent implements OnInit {
     });
 
     this._checkEditMode();
+  }
+
+  onBack(){
+    this.location.back();
+  }
+
+  ngOnDestroy() {
+    this.endsubs$.complete();
   }
 
   onSubmit() {
@@ -55,6 +65,7 @@ export class CategoriesFormComponent implements OnInit {
       this._addCategory(category);
     }
   }
+  
   private _addCategory(category: Category) {
     this.categoriesService.createCategory(category).subscribe(
       (category: Category) => {
